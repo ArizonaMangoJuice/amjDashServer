@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Page = require('../models/Page');
-// const addUserId = require('../addingUserId');
 const passport = require('passport');
 
+// cannot access without authentication
 router.use('/', passport.authenticate('jwt', {session: false, failWithError: true}));
 
-
+// create page 
 router.post('/', (req, res, next) => {
     const {
         title,
@@ -21,7 +21,6 @@ router.post('/', (req, res, next) => {
         page[key] = req.body[key]
     }
 
-
     if (!title || !linkName) {
         const err = new Error('title or linkName is missing');
         err.status = 400;
@@ -32,7 +31,6 @@ router.post('/', (req, res, next) => {
     Page.create(page)
         .then(result => res.json(result))
         .catch(err => next(err));
-
 })
 
 module.exports = router;
