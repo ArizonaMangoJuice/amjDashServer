@@ -14,7 +14,7 @@ const jwtStrategy = require('./passport/jwt');
 const app = express();
 const userRoute = require('./routes/user');
 const authRoute = require('./routes/auth');
-
+const pageRoute = require('./routes/page');
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -28,13 +28,17 @@ app.use(
   })
 );
 
+// protected endpoints
+
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-//now you have to protect the endpoints
+
 app.use(express.json());
 
 
 app.use('/api/users', userRoute);
+
+app.use('/api/page', pageRoute);
 
 app.use('/api', authRoute);
 
