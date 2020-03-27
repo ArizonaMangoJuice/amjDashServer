@@ -36,7 +36,17 @@ router.post('/', (req, res, next) => {
 
     Page.create(page)
         .then(result => res.json(result))
-        .catch(err => next(err));
+        .catch(err => {
+            // console.log(err.code);
+            res.status(400)
+            let error = new Error()
+            console.log(error)
+            // return next(err)
+            res.json({
+                message: 'title is already used',
+                status: 400
+            })
+        });
 })
 
 module.exports = router;
