@@ -4,7 +4,7 @@ const Page = require('../models/Page');
 const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-    Page.find({})
+    Page.find().sort({_id: -1}).limit(4)
         .then(result => res.json(result))
         .catch(err => next(err));
 });
