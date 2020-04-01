@@ -9,6 +9,14 @@ router.get('/', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.get('/:title', (req, res, next) => {
+    let {title} = req.params
+    console.log(title)
+    Page.find({title: title})
+        .then(result => res.json(result))
+        .catch(error => next(error))
+})
+
 // cannot access without authentication
 router.use('/', passport.authenticate('jwt', {session: false, failWithError: true}));
 
