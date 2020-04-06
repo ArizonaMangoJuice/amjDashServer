@@ -4,7 +4,7 @@ const Page = require('../models/Page');
 const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-    Page.find().sort({_id: -1}).limit(4)
+    Page.find().sort({_id: -1}).limit(9)
         .then(result => res.json(result))
         .catch(err => next(err));
 });
@@ -13,7 +13,10 @@ router.get('/:title', (req, res, next) => {
     let {title} = req.params
     console.log(title)
     Page.find({title: title})
-        .then(result => res.json(result))
+        .then(result => {
+            console.log(result)
+            res.json(result)
+        })
         .catch(error => next(error))
 })
 
