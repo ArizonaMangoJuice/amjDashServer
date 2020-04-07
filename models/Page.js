@@ -4,6 +4,7 @@ let Schema = mongoose.Schema;
 let pageSchema = new Schema({
     title: {type: String, required: true},
     linkName: {type: String, required: true, unique: true},
+    linkStack: Array,
     body: {type: Array},
     date: {type: Date, default: Date.now},
     pictures: Array,
