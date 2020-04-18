@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const passport = require('passport');
 
-const { PORT, CLIENT_ORIGIN } = require('./config');
+const { PORT, CLIENT_ORIGIN, CLIENT_ORIGIN_TWO } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 const localStrategy = require('./passport/local');
@@ -22,10 +22,22 @@ app.use(
   })
 );
 
+var whitelist = [CLIENT_ORIGIN,  CLIENT_ORIGIN_TWO]
+
+console.log(whitelist)
+
+let corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 app.use(
-  cors({
-    origin: CLIENT_ORIGIN
-  })
+  cors(corsOptions)
 );
 
 // protected endpoints
