@@ -3,6 +3,12 @@ const router = express.Router();
 const Page = require('../models/Page');
 const passport = require('passport');
 
+router.get('/blogpreview', (req, res, next) => {
+    Page.find().sort({_id: -1}).limit(4)
+        .then(result => res.json(result))
+        .catch(err => next(err));
+});
+
 router.get('/', (req, res, next) => {
     Page.find().sort({_id: -1}).limit(9)
         .then(result => res.json(result))
